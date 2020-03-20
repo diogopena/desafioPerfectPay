@@ -22,3 +22,7 @@ Route::get('/', function () {
 });
 
 Route::resource('/product', 'productController');
+
+Route::resource('/customer', 'customerController');
+
+Route::resource('/sale', 'saleController');

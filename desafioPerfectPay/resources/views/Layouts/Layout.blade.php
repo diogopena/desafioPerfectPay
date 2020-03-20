@@ -23,8 +23,8 @@
         <form class="form-inline">
             <a class="btn btn-secondary mr-sm-2" href="index" role="button">Início</a>
             <a class="btn btn-secondary mr-sm-2" href="{{ route('product.index') }}" role="button">Produtos</a>
-            <a class="btn btn-secondary mr-sm-2" href="" role="button">Clientes</a> 
-            <a class="btn btn-secondary mr-sm-2" href="" role="button">Vendas</a>    
+            <a class="btn btn-secondary mr-sm-2" href="{{ route('customer.index') }}" role="button">Clientes</a> 
+            <a class="btn btn-secondary mr-sm-2" href="{{ route('sale.index') }}" role="button">Vendas</a>    
         </form>
 
             
