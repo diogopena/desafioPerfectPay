@@ -18,11 +18,19 @@
             {{csrf_field()}}
             <div class="form-group">
                 <label >ID do Produto: </label>
-                <input id="product_id" name="product_id" required type="text" class="form-control" value="{{old("product_id")}}">
+                <select multiple class="form-control" id="product_id" name="product_id" type="text" value="{{old("product_id")}}">
+                    @foreach ($products as $product)
+                    <option>{{$product->id}}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
                 <label >ID do Cliente: </label>
-                <input id="customer_id" name="customer_id" type="text" class="form-control" value="{{old("customer_id")}}">
+                <select multiple class="form-control" id="customer_id" name="customer_id" type="text" value="{{old("customer_id")}}">
+                    @foreach ($customers as $customer)
+                    <option>{{$customer->id}}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
                 <label >Quantidade: </label>
@@ -38,7 +46,12 @@
             </div>
             <div class="form-group">
                 <label >Status da Venda: </label>
-                <input id="status" name="status" type="text" class="form-control" value="{{old("status")}}">
+                <select multiple class="form-control" id="status" name="status" type="text" value="{{old("status")}}">
+                    <option>Vendido </option>
+                    <option>Cancelada</option>
+                    <option>Devolvida</option>
+                </select>
+                
             </div>
             <button type="submit" class="btn btn-primary">Gravar!</button>
         </form>

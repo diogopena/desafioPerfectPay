@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\productRequest;
+use App\Http\Requests\productUpdateRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 
@@ -21,7 +23,7 @@ class productController extends Controller
         return view('Products/createproducts');               
     }
 
-    public function store(Request $request) {  //criar request especifico
+    public function store(productRequest $request) {  //criar request especifico
         $data = $request->all();
         $productModel = app(Product::class);
         $product = $productModel->create([
@@ -38,14 +40,16 @@ class productController extends Controller
         return view('Products/editproducts',compact('product'));
     }
 
-    public function update(Request $request,$id){ //criar resquest especifico
+    public function update(productUpdateRequest $request,$id){ //criar resquest especifico
         $data = $request->all();
         $productModel = app(Product::class);
         $product = $productModel->find($id);
         $product->update([
-            'name'=> $data['name'],
             'description' => $data['description'] ,
             'price'=> $data['price'],
+            /*
+            'name'=> $data['name'],
+            */
         ]);
         return redirect()->route('product.index');
     }

@@ -13,25 +13,50 @@
             </ul>
         </div>
     @endif
-    
-        <form method="POST" action="{{route('product.update',[$product->id])}}" class="form-horizontal form-validade">
+
+    <form method="POST" action="{{route('sale.update')}}" class="form-horizontal form-validade">
             {{csrf_field()}}
             @method('PUT')
             <div class="form-group">
-                <label >Nome: </label>
-                <input id="name" name="name" required type="text" class="form-control" value="{{old("name",$product->name)}}">
+                <label >ID do Produto: </label>
+                <select disabled multiple class="form-control" id="product_id" name="product_id" type="text" value="{{old("product_id",$sale->product_id)}}">
+                    @foreach ($products as $product)
+                    <option>{{$product->id}}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
-                <label >Descrição: </label>
-                <input id="description" name="description" type="text" class="form-control" value="{{old("description",$product->description)}}">
+                <label >ID do Cliente: </label>
+                <select disabled multiple class="form-control" id="customer_id" name="customer_id" type="text" value="{{old("customer_id",$sale->customer_id)}}">
+                    @foreach ($customers as $customer)
+                    <option>{{$customer->id}}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
-                <label >Preço: </label>
-                <input id="price" name="price" type="text" class="form-control" value="{{old("price",$product->price)}}">
+                <label >Quantidade: </label>
+                <input id="qty" name="qty" type="text" class="form-control" value="{{old("qty",$sale->qty)}}">
+            </div>
+            <div class="form-group">
+                <label >Desconto: </label>
+                <input id="discount" name="discount" type="text" class="form-control" value="{{old("discount",$sale->discount)}}">
+            </div>
+            <div class="form-group">
+                <label >Preço vendido: </label>
+                <input id="sale_amount" name="sale_amount" type="text" class="form-control" value="{{old("sale_amount",$sale->sale_amount)}}">
+            </div>
+            <div class="form-group">
+                <label >Status da Venda: </label>
+                <select multiple class="form-control" id="status" name="status" type="text" value="{{old("status"),$sale->status}}">
+                    <option>Vendido </option>
+                    <option>Cancelada</option>
+                    <option>Devolvida</option>
+                </select>
+                
             </div>
             <button type="submit" class="btn btn-primary">Gravar!</button>
         </form>
-    
+
     </div>
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

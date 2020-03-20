@@ -14,7 +14,7 @@
         </div>
     @endif
     
-    <form method="POST" action="{{route('customer.store')}}" class="form-horizontal form-validade">
+    <form method="POST" action="{{route('customer.update',[$customer->identification_number])}}" class="form-horizontal form-validade">
             {{csrf_field()}}
             @method('PUT')
             <div class="form-group">
@@ -27,11 +27,11 @@
             </div>
             <div class="form-group">
                 <label >Número de identificação: </label>
-                <input id="identification_number" name="identification_number" type="text" class="form-control" value="{{old("identification_number",$customer->identification_number)}}">
+                <input disabled id="identification_number" name="identification_number" type="text" class="form-control" value="{{old("identification_number",$customer->identification_number)}}">
             </div>
             <div class="form-group">
                 <label >E-mail: </label>
-                <input id="email" name="email" type="text" class="form-control" value="{{old("email",$customer->email)}}">
+                <input disabled id="email" name="email" type="text" class="form-control" value="{{old("email",$customer->email)}}">
             </div>
             <button type="submit" class="btn btn-primary">Gravar!</button>
         </form>

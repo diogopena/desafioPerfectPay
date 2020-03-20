@@ -19,7 +19,7 @@
             @method('PUT')
             <div class="form-group">
                 <label >Nome: </label>
-                <input id="name" name="name" required type="text" class="form-control" value="{{old("name",$product->name)}}">
+                <input disabled id="name" name="name" required type="text" class="form-control" value="{{old("name",$product->name)}}">
             </div>
             <div class="form-group">
                 <label >Descrição: </label>

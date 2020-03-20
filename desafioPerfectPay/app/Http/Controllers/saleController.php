@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\salesStoreRequest;
 use App\Models\Sale;
 use App\Models\Customer;
+use App\Models\Product;
 
 
 class saleController extends Controller
@@ -21,10 +23,14 @@ class saleController extends Controller
     public function show($id) {
         
         //Tabela de vendas
+        $productModel = app(Product::class);
+        $products = $productModel->all();
         $customerModel = app(Customer::class);
         $customers = $customerModel->all();
         $saleModel = app(Sale::class);
         $sales = $saleModel->where(['customer_id' => $id])->get();
+        //$sales = $customerModel->sales();
+
          
         //Tabela de resultado de vendas
         $vendidos = $saleModel->where([
@@ -62,15 +68,18 @@ class saleController extends Controller
             $qtydevolvido += $devolvido->qty;
         }
 
-        return view('Sales/indexsalescustomer', compact('customers','sales','valorvendido','valordevolvido','valorcancelado','qtyvendido','qtycancelado','qtydevolvido'));
+        return view('Sales/indexsalescustomer', compact('products','customers','sales','valorvendido','valordevolvido','valorcancelado','qtyvendido','qtycancelado','qtydevolvido'));
 }
 
     public function create() {
-        
-        return view('Sales/createsales');               
+        $productModel = app(Product::class);
+        $products = $productModel->all();
+        $customerModel = app(Customer::class);
+        $customers = $customerModel->all();
+        return view('Sales/createsales', compact('products','customers'));               
     }
 
-    public function store(Request $request) {  //criar request especifico
+    public function store(salesStoreRequest $request) {  //criar request especifico
         $data = $request->all();
         $saleModel = app(Sale::class);
         $sale = $saleModel->create([

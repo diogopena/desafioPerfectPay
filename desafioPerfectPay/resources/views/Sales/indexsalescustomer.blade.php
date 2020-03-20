@@ -5,7 +5,6 @@
 
     <div class="container">
         <a class="btn btn-primary m-1" href="{{ route('sale.create') }}" role="button" >Inserir venda</a>
-        <a class="btn btn-primary m-1" href="" role="button" >Editar venda</a>
     </div>
 
     
@@ -16,7 +15,7 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 @foreach($customers as $customer)
-                <a class="dropdown-item" href="{{ route('sale.show',[ $customer->id ]) }}">{{$customer->name}}</a>
+                <a class="dropdown-item" href="{{ route('sale.show',[ $customer->identification_number ]) }}">Cliente:{{$customer->name}} ID:{{$customer->identification_number}}</a>
                 @endforeach
             </div>
         </div>
@@ -38,22 +37,22 @@
             <tr>
                 <th scope="row">Vendas</th>
                 <td>{{$qtyvendido}}</td>
-                <td>{{$valorvendido}}</td>
+                <td>R$ {{$valorvendido}}</td>
             </tr>
             <tr>
                 <th scope="row">Devoluções</th>
                 <td>{{$qtydevolvido}}</td>
-                <td>{{$valordevolvido}}</td>
+                <td>R$ {{$valordevolvido}}</td>
             </tr>
             <tr>
                 <th scope="row">Cancelamentos</th>
                 <td>{{$qtycancelado}}</td>
-                <td>{{$valorcancelado}}</td>
+                <td>R$ {{$valorcancelado}}</td>
             </tr>
     </tbody>
     </table>
     </div>   
-    
+    <br>
     <div class="container-sm">
     <table class="table table-striped">
         <tr>
@@ -62,6 +61,7 @@
         <thead>
             <tr>
             <th scope="col">Produto</th>
+            <th scope="col">Quantidade</th>
             <th scope="col">Data</th>
             <th scope="col">Valor</th>
             <th scope="col">Status</th>
@@ -72,6 +72,7 @@
         @foreach($sales as $sale)
             <tr>
                 <th scope="row">{{$sale->product_id}}</th>
+                <td>{{$sale->qty}}</td>
                 <td>{{$sale->updated_at}}</td>
                 <td>{{$sale->sale_amount}}</td>
                 <td>{{$sale->status}}</td>

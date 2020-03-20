@@ -5,7 +5,6 @@
 
     <div class="container">
         <a class="btn btn-primary m-1" href="{{ route('sale.create') }}" role="button" >Inserir venda</a>
-        <a class="btn btn-primary m-1" href="" role="button" >Editar venda</a>
     </div>
     
     <div class="container">
@@ -15,7 +14,7 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 @foreach($customers as $customer)
-                <a class="dropdown-item" href="{{ route('sale.show',[ $customer->id ]) }}">{{$customer->name}}</a>
+                <a class="dropdown-item" href="{{ route('sale.show',[ $customer->identification_number ]) }}">Cliente:{{$customer->name}} ID:{{$customer->identification_number}}</a>
                 @endforeach
             </div>
         </div>

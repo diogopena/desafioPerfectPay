@@ -11,10 +11,8 @@
         <link href="{{ asset('/css/select2.min.css') }}" rel="stylesheet">
         <link href="{{ asset('/css/toastr.min.css') }}" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700" rel="stylesheet">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://igorescobar.github.io/jQuery-Mask-Plugin/js/jquery.mask.min.js"></script>
+        
         @stack('scripts')
-    
         <title>Desafio PerfectPay</title>
         
         <nav class="navbar navbar-btn navbar-dark bg-dark">
@@ -30,5 +28,4 @@
             
             
         </nav>
-
 </head>
