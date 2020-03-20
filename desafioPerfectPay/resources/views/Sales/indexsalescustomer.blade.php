@@ -7,6 +7,7 @@
         <a class="btn btn-primary m-1" href="{{ route('sale.create') }}" role="button" >Inserir venda</a>
         <a class="btn btn-primary m-1" href="" role="button" >Editar venda</a>
     </div>
+
     
     <div class="container">
         <div class="dropdown m-1">
@@ -22,6 +23,38 @@
     </div>
     
     <div class="container">
+    <table class="table table-striped" >
+        <tr>
+            <H3>Resultado de Vendas</H3>
+        </tr>
+        <thead>
+            <tr>
+            <th scope="col">Status</th>
+            <th scope="col">Quantidade</th>
+            <th scope="col">Valor Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Vendas</th>
+                <td>{{$qtyvendido}}</td>
+                <td>{{$valorvendido}}</td>
+            </tr>
+            <tr>
+                <th scope="row">Devoluções</th>
+                <td>{{$qtydevolvido}}</td>
+                <td>{{$valordevolvido}}</td>
+            </tr>
+            <tr>
+                <th scope="row">Cancelamentos</th>
+                <td>{{$qtycancelado}}</td>
+                <td>{{$valorcancelado}}</td>
+            </tr>
+    </tbody>
+    </table>
+    </div>   
+    
+    <div class="container-sm">
     <table class="table table-striped">
         <tr>
             <H3>Tabela de Vendas</H3>
@@ -56,28 +89,7 @@
     </table>
     </div>
 
-    <div class="container">
-    <table class="table table-striped">
-        <tr>
-            <H3>Resultado de Vendas</H3>
-        </tr>
-        <thead>
-            <tr>
-            <th scope="col">Status</th>
-            <th scope="col">Quantidade</th>
-            <th scope="col">Valor Total</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            <tr>
-                <th scope="row">{{$info['status']}}</th>
-                <td>{{$info['status']}}</td>
-                <td>{{$info['status']}}</td>
-            </tr>
-    </tbody>
-    </table>
-    </div>   
+    
  
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

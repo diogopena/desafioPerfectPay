@@ -19,18 +19,50 @@ class saleController extends Controller
     }
 
     public function show($id) {
-
+        
+        //Tabela de vendas
         $customerModel = app(Customer::class);
         $customers = $customerModel->all();
         $saleModel = app(Sale::class);
         $sales = $saleModel->where(['customer_id' => $id])->get();
-        $info = [
-            'status' => 11111,
-            'teste' => 22222,
-            'teste2' => 33333
-        ];
+         
+        //Tabela de resultado de vendas
+        $vendidos = $saleModel->where([
+            'status' => 'Vendido',
+            'customer_id' => $id
+            ])->get();
 
-        return view('Sales/indexsalescustomer', compact('customers','sales','info'));
+        $cancelados = $saleModel->where([
+            'status' => 'Cancelada',
+            'customer_id' => $id
+            ])->get(); 
+
+        $devolvidos = $saleModel->where([
+            'status' => 'Devolvida',
+            'customer_id' => $id
+            ])->get();
+        
+        $qtyvendido = 0;
+        $qtycancelado = 0;
+        $qtydevolvido = 0;    
+        $valorvendido = 0;
+        $valorcancelado = 0;
+        $valordevolvido = 0;
+
+        foreach ($vendidos as $vendido) {
+            $valorvendido += $vendido->sale_amount;
+            $qtyvendido += $vendido->qty;
+        }
+        foreach ($cancelados as $cancelado) {
+            $valorcancelado += $cancelado->sale_amount;
+            $qtycancelado += $cancelado->qty;
+        }
+        foreach ($devolvidos as $devolvido) {
+            $valordevolvido += $devolvido->sale_amount;
+            $qtydevolvido += $devolvido->qty;
+        }
+
+        return view('Sales/indexsalescustomer', compact('customers','sales','valorvendido','valordevolvido','valorcancelado','qtyvendido','qtycancelado','qtydevolvido'));
 }
 
     public function create() {
@@ -49,7 +81,8 @@ class saleController extends Controller
             'sale_amount'=> $data['sale_amount'],
             'status'=> $data['status'],
         ]);
-        return redirect()->route('sales.index');
+        
+        return redirect()->route('sale.index');
     }
 
     public function edit($id) {
