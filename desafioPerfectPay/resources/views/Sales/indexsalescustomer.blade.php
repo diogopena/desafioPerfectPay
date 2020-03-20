@@ -79,7 +79,7 @@
                 
                 <td>
                 
-                <a class="btn btn-warning btm-lg text-white" href="" role="button" aria-pressed="true">
+                <a class="btn btn-warning btm-lg text-white" href="{{ route('sale.edit',[$sale->id]) }}" role="button" aria-pressed="true">
                     <span class='d-none d-md-inline'>Editar</span>
                 </a>
                     

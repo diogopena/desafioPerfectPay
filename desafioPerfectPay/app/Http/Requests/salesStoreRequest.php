@@ -23,8 +23,7 @@ class salesStoreRequest extends FormRequest
      */
     public function rules()
     {
-        $status = ['Vendido','Cancelada','Devolvida'];
-
+        
         return [
             'product_id' => 'required' ,
             'customer_id'=> 'required',

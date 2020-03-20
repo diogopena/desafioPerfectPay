@@ -13,7 +13,7 @@ class salesUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class salesUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'qty'=> 'required|integer',
+            'sale_amount'=> 'required',
+            'status'=> 'required',
         ];
     }
 }

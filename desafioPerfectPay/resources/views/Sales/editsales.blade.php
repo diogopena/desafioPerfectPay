@@ -14,7 +14,7 @@
         </div>
     @endif
 
-    <form method="POST" action="{{route('sale.update')}}" class="form-horizontal form-validade">
+    <form method="POST" action="{{route('sale.update',[$sale->id])}}" class="form-horizontal form-validade">
             {{csrf_field()}}
             @method('PUT')
             <div class="form-group">

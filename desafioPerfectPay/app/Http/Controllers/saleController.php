@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\salesStoreRequest;
+use App\Http\Requests\salesUpdateRequest;
 use App\Models\Sale;
 use App\Models\Customer;
 use App\Models\Product;
@@ -56,15 +57,15 @@ class saleController extends Controller
         $valordevolvido = 0;
 
         foreach ($vendidos as $vendido) {
-            $valorvendido += $vendido->sale_amount;
+            $valorvendido += ($vendido->qty * $vendido->sale_amount);
             $qtyvendido += $vendido->qty;
         }
         foreach ($cancelados as $cancelado) {
-            $valorcancelado += $cancelado->sale_amount;
+            $valorcancelado += ($cancelado->qty * $cancelado->sale_amount);
             $qtycancelado += $cancelado->qty;
         }
         foreach ($devolvidos as $devolvido) {
-            $valordevolvido += $devolvido->sale_amount;
+            $valordevolvido += ($devolvido->qty * $devolvido->sale_amount);
             $qtydevolvido += $devolvido->qty;
         }
 
@@ -79,7 +80,7 @@ class saleController extends Controller
         return view('Sales/createsales', compact('products','customers'));               
     }
 
-    public function store(salesStoreRequest $request) {  //criar request especifico
+    public function store(salesStoreRequest $request) { 
         $data = $request->all();
         $saleModel = app(Sale::class);
         $sale = $saleModel->create([
@@ -95,21 +96,26 @@ class saleController extends Controller
     }
 
     public function edit($id) {
+        $productModel = app(Product::class);
+        $products = $productModel->all();
         $customerModel = app(Customer::class);
-        $customer = $customerModel->find($id);
-        return view('Customers/editcustomers',compact('customer'));
+        $customers = $customerModel->all();
+        $saleModel = app(Sale::class);
+        $sale = $saleModel->find($id);
+        return view('Sales/editsales',compact('sale','products','customers'));
     }
 
-    public function update(Request $request,$id){ //criar resquest especifico
+    public function update(salesUpdateRequest $request, $id){
         $data = $request->all();
-        $customerModel = app(Customer::class);
-        $customer = $customerModel->find($id);
-        $customer->update([
-            'name'=> $data['name'],
-            'description' => $data['description'] ,
-            'price'=> $data['price'],
+        $saleModel = app(Sale::class);
+        $sale = $saleModel->find($id);
+        $sale->update([
+            'qty'=> $data['qty'],
+            'discount'=> $data['discount'],
+            'sale_amount'=> $data['sale_amount'],
+            'status'=> $data['status'],
         ]);
-        return redirect()->route('customer.index');
+        return redirect()->route('sale.index');
     }
     
 }
