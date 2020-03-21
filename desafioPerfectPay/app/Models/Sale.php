@@ -12,4 +12,15 @@ class Sale extends Model
     protected $fillable = [
         'product_id', 'customer_id', 'qty', 'discount', 'sale_amount', 'status'
     ];
+
+    public function customer()
+    {
+    	return $this->belongsTo(Customer::class);
+    }
+
+    public function product()
+    {
+    	return $this->belongsTo(Product::class);
+    }
+
 }
