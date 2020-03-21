@@ -19,7 +19,7 @@ class CreateSalesTable extends Migration
             //$table->string('product_id')->foreign()->references('name')->on('products');
             //$table->unsignedBigInteger('customer_id');
             //$table->foreign('customer_id')->references('id')->on('customers');
-            $table->foreignId('products_id')->constrained();
+            $table->foreignId('product_id')->constrained();
             $table->foreignId('customer_id')->constrained();
             $table->integer('qty');
             $table->float('discount');

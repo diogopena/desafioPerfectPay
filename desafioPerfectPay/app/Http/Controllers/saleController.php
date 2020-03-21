@@ -73,28 +73,35 @@ class saleController extends Controller
 }
 
     public function create() {
+        
         $productModel = app(Product::class);
         $products = $productModel->all();
         $customerModel = app(Customer::class);
         $customers = $customerModel->all();
-        return view('Sales/createsales', compact('products','customers'));               
+        return view('Sales/createsales', compact('products','customers'));
+                      
     }
-
+    
     public function store(salesStoreRequest $request) { 
-        $data = $request->all();
-        $saleModel = app(Sale::class);
-        $sale = $saleModel->create([
-            'product_id' => $data['product_id'] ,
-            'customer_id'=> $data['customer_id'],
-            'qty'=> $data['qty'],
-            'discount'=> $data['discount'],
-            'sale_amount'=> $data['sale_amount'],
-            'status'=> $data['status'],
-        ]);
+    
+        $data = $request->all(); 
+        
+        $customer = Customer::find($data['customer_id']);
+        $product = Product::find($data['product_id']);
+        
+        $sale = app(Sale::class);
+
+        $sale->qty = $data['qty'];
+        $sale->discount = $data['discount'];
+        $sale->sale_amount = $data['sale_amount'];
+        $sale->status = $data['status'];
+        $sale->customer()->associate($customer);
+        $sale->product()->associate($product);
+        $sale->save();
         
         return redirect()->route('sale.index');
     }
-
+    /*
     public function edit($id) {
         $productModel = app(Product::class);
         $products = $productModel->all();
@@ -117,5 +124,5 @@ class saleController extends Controller
         ]);
         return redirect()->route('sale.index');
     }
-    
+    */
 }

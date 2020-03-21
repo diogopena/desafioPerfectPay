@@ -10,7 +10,7 @@ class Sale extends Model
     use Notifiable;
     
     protected $fillable = [
-        'product_id', 'customer_id', 'qty', 'discount', 'sale_amount', 'status'
+        'qty', 'discount', 'sale_amount', 'status'
     ];
 
     public function customer()
