@@ -13,6 +13,8 @@ class Sale extends Model
         'qty', 'discount', 'sale_amount', 'status'
     ];
 
+    
+
     public function customer()
     {
     	return $this->belongsTo(Customer::class);

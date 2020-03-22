@@ -13,10 +13,12 @@
     </div>
     
     <div class="container">
-    <form>
+    
+    <form method='POST' action="{{route('search')}}">
+        @csrf
         <div class="form-row">
             <div class="col">
-                <select id="id" class="form-control">
+                <select id="id" name="id" class="form-control">
                     <option selected value="">Cliente</option>
                     @foreach($customers as $customer)
                     <option value="{{$customer->id}}">{{$customer->name}} ID:{{$customer->id}}</option>

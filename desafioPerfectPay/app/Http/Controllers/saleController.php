@@ -26,6 +26,7 @@ class saleController extends Controller
         return view('Sales/indexsales', compact('customers','products','sales'));
     }
 
+    /*
     public function show($id) {
         
         dd($request);   
@@ -75,6 +76,7 @@ class saleController extends Controller
 
         return view('Sales/indexsales', compact('products','customers','sales','valorvendido','valordevolvido','valorcancelado','qtyvendido','qtycancelado','qtydevolvido'));
     }
+    */
 
     public function create() {
         
@@ -131,14 +133,17 @@ class saleController extends Controller
 
     public function search(Request $request) {
         $id = $request->id;
-        dd($id);
-        //Tabela de vendas
+        $time1 = $request->time1;
+        $time2 = $request->time2;
         $productModel = app(Product::class);
-        $products = $productModel->all();
         $customerModel = app(Customer::class);
-        $customers = $customerModel->all();
         $saleModel = app(Sale::class);
-        $sales = $saleModel->where(['customer_id' => $id])->get();
+        
+        //Tabela de vendas
+        $products = $productModel->all();
+        $customers = $customerModel->all();
+        //where(['customer_id' => $id])->
+        $sales = $saleModel->whereBetween('created_at',[$time1,$time2])->get();
         //$sales = $customerModel->sales();
 
          
@@ -176,7 +181,7 @@ class saleController extends Controller
             $valordevolvido += $devolvido->sale_amount;
         }
 
-        return view('Sales/indexsales', compact('products','customers','sales','valorvendido','valordevolvido','valorcancelado','qtyvendido','qtycancelado','qtydevolvido'));
+        return view('Sales/indexsalesResults', compact('products','customers','sales','valorvendido','valordevolvido','valorcancelado','qtyvendido','qtycancelado','qtydevolvido'));
     }
     
 }
