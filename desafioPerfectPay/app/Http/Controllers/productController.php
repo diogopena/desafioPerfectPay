@@ -23,7 +23,7 @@ class productController extends Controller
         return view('Products/createproducts');               
     }
 
-    public function store(productRequest $request) {  //criar request especifico
+    public function store(productRequest $request) {
         $data = $request->all();
         $productModel = app(Product::class);
         $product = $productModel->create([
@@ -31,7 +31,7 @@ class productController extends Controller
             'description' => $data['description'] ,
             'price'=> $data['price'],
         ]);
-        return redirect()->route('product.index');
+        return redirect()->route('product.index')->with('status', 'Produto criado com Sucesso!');
     }
 
     public function edit($id) {
@@ -40,48 +40,22 @@ class productController extends Controller
         return view('Products/editproducts',compact('product'));
     }
 
-    public function update(productUpdateRequest $request,$id){ //criar resquest especifico
+    public function update(productUpdateRequest $request,$id){
         $data = $request->all();
         $productModel = app(Product::class);
         $product = $productModel->find($id);
         $product->update([
             'description' => $data['description'] ,
             'price'=> $data['price'],
-            /*
-            'name'=> $data['name'],
-            */
         ]);
-        return redirect()->route('product.index');
+        return redirect()->route('product.index')->with('status', 'Produto editado com Sucesso!');
     }
 
     public function destroy($id) {
-        
-        if(!empty($id)){
-            $productModel = app(Product::class);
-            $product = $productModel->find($id);
-            if(!empty($product)){
-                $product->delete();
-                return response()->json([
-                    'status'  => 'success',
-                    'message' => 'Produto deletado com sucesso.',
-                    'reload'  => true,
-                ]);
-            }
-            else{
-                return response()->json([
-                    'status'  => 'error',
-                    'message' => 'Produto não encontrado.',
-                    'reload'  => true,
-                ]);
-            }
-        }
-        else{
-            return response()->json([
-                'status'  => 'error',
-                'message' => 'ID não está na requisição',
-                'reload'  => true,
-            ]);
 
-        }
-    }  
+        $productModel = app(Product::class);
+        $product = $productModel->find($id);
+        $product->delete();
+        return redirect()->route('product.index')->with('status', 'Produto DELETADO com Sucesso!');
+    }
 }

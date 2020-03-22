@@ -17,32 +17,30 @@
         <form method="POST" action="{{route('sale.store')}}" class="form-horizontal form-validade">
             {{csrf_field()}}
             <div class="form-group">
-                <label >ID do Produto: </label>
-                <select multiple class="form-control" id="product_id" name="product_id" type="text" value="{{old("product_id")}}">
+                <label >Produto da Venda: </label>
+                <select multiple class="form-control" id="product_id" name="product_id" type="text" >
                     @foreach ($products as $product)
-                    <option>{{$product->id}}</option>
+                    <option value="{{$product->id}}">{{$product->name}}</option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group">
-                <label >ID do Cliente: </label>
-                <select multiple class="form-control" id="customer_id" name="customer_id" type="text" value="{{old("customer_id")}}">
+                <label >Cliente da Venda: </label>
+                <select multiple class="form-control" id="customer_id" name="customer_id" type="text">
                     @foreach ($customers as $customer)
-                    <option>{{$customer->id}}</option>
+                    <option value="{{$customer->id}}">{{$customer->name}}</option>
                     @endforeach
                 </select>
             </div>
-            <div class="form-group">
-                <label >Quantidade: </label>
-                <input id="qty" name="qty" type="text" class="form-control" value="{{old("qty")}}">
-            </div>
-            <div class="form-group">
-                <label >Desconto: </label>
-                <input id="discount" name="discount" type="text" class="form-control" value="{{old("discount")}}">
-            </div>
-            <div class="form-group">
-                <label >Preço vendido: </label>
-                <input id="sale_amount" name="sale_amount" type="text" class="form-control" value="{{old("sale_amount")}}">
+            <div class="form-row">
+                <div class="col">
+                    <label >Quantidade: </label>
+                    <input id="qty" name="qty" type="text" class="form-control" value="{{old("qty")}}">
+                </div>
+                <div class="col">
+                    <label >Desconto: </label>
+                    <input id="discount" name="discount" type="text" class="form-control" value="{{old("discount")}}">
+                </div>
             </div>
             <div class="form-group">
                 <label >Status da Venda: </label>

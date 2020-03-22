@@ -22,7 +22,7 @@ class customerController extends Controller
         return view('Customers/createcustomers');               
     }
 
-    public function store(customerRequest $request) {  //criar request especifico
+    public function store(customerRequest $request) {
         $data = $request->all();
         $customerModel = app(Customer::class);
         $customer = $customerModel->create([
@@ -31,7 +31,7 @@ class customerController extends Controller
             'identification_number'=> $data['identification_number'],
             'email'=> $data['email'],
         ]);
-        return redirect()->route('customer.index');
+        return redirect()->route('customer.index')->with('status', 'Cliente criado com Sucesso!');
     }
 
     public function edit($id) {
@@ -41,18 +41,22 @@ class customerController extends Controller
         return view('Customers/editcustomers',compact('customer'));
     }
 
-    public function update(customerUpdateRequest $request,$id){ //criar resquest especifico
+    public function update(customerUpdateRequest $request,$id){
         $data = $request->all();
         $customerModel = app(Customer::class);
         $customer = $customerModel->find($id);
         $customer->update([
             'name' => $data['name'],
             'identification_type' => $data['identification_type'] ,
-            /*
-            'identification_number'=> $data['identification_number'],
-            'email'=> $data['email'],
-            */
         ]);
-        return redirect()->route('customer.index');
+        return redirect()->route('customer.index')->with('status', 'Cliente editado com Sucesso!');
+    }
+
+    public function destroy($id) {
+
+        $customerModel = app(Customer::class);
+        $customer = $customerModel->find($id);
+        $customer->delete();
+        return redirect()->route('customer.index')->with('status', 'Cliente DELETADO com Sucesso!');
     }
 }

@@ -1,25 +1,55 @@
 <!doctype html>
 <html lang="en">
-    @include('Layouts/Layout')
-    <body>
+@include('Layouts/Layout')
+<body>
 
     <div class="container">
-        <a class="btn btn-primary m-1" href="{{ route('sale.create') }}" role="button" >Inserir venda</a>
-    </div>
-    
-    <div class="container">
-        <div class="dropdown m-1">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Clientes
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                @foreach($customers as $customer)
-                <a class="dropdown-item" href="{{ route('sale.show',[ $customer->identification_number ]) }}">Cliente:{{$customer->name}} ID:{{$customer->identification_number}}</a>
-                @endforeach
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container-sm">
+                <h1 class="display-10">Relatório de vendas</h1>
             </div>
+            <a class="btn btn-primary m-1" href="{{ route('sale.create') }}" role="button" >Inserir venda</a>
         </div>
     </div>
     
+    <div class="container">
+    <form>
+        <div class="form-row">
+            <div class="col">
+                <select id="id" class="form-control">
+                    <option selected value="">Cliente</option>
+                    @foreach($customers as $customer)
+                    <option value="{{$customer->id}}">{{$customer->name}} ID:{{$customer->id}}</option>
+                    @endforeach
+                </select>
+            </div>
+           
+        <div class="col">
+            <div class="input-group">
+                <div class="input-group-prepend"></div>
+                <div class="input-group-text">DE</div>
+                <input type="text" class="form-control" id="time">
+            </div>
+        </div>
+        <div class="col">
+            <div class="input-group">
+                <div class="input-group-prepend"></div>
+                <div class="input-group-text">ATÉ</div>
+                <input type="text" class="form-control" id="time">
+            </div>
+        </div>
+        
+        <div class="col">
+            <button class="btn btn-primary" type="submit">Procurar</button>
+        </div>
+        </div>
+        
+        
+    </form>   
+    </div>
+    
+
+
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -27,6 +57,6 @@
     
 @push('scripts')
 @endpush  
-    </body>
+</body>
 
 </html>

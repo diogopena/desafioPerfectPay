@@ -25,7 +25,6 @@ class salesUpdateRequest extends FormRequest
     {
         return [
             'qty'=> 'required|integer',
-            'sale_amount'=> 'required',
             'status'=> 'required',
         ];
     }

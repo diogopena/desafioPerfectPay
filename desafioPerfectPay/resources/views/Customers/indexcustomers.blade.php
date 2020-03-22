@@ -4,7 +4,21 @@
    
     <body>
     <div class="container">
-    <table class="table table-striped">
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container-sm">
+                <h1 class="display-10">Clientes Cadastrados</h1>
+            </div>
+            <a class="btn btn-primary m-1" href="{{route('customer.create')}}" role="button" style='text-align:center;'>Inserir Cliente</a>
+        </div>
+        
+
+    @if (session('status'))
+    <div class="alert alert-info">
+        {{ session('status') }}
+    </div>
+    @endif
+
+    <table class="table table-striped table-bordered">
         <thead>
             <tr>
             <th scope="col">#id</th>
@@ -26,17 +40,24 @@
                 
                 <td>
                 
-                <a class="btn btn-warning btm-lg text-white" href="{{ route('customer.edit',[ $customer->identification_number ]) }}" role="button" aria-pressed="true">
+                <a class="btn btn-warning btm-lg text-white" href="{{ route('customer.edit',[ $customer->id ]) }}" role="button" aria-pressed="true">
                     <span class='d-none d-md-inline'>Editar</span>
                 </a>
+
+                <a class="btn btn-danger btm-lg text-white" role="button" aria-pressed="true" href="#" onclick="event.preventDefault();document.getElementById('destroy-form').submit();">
+                    <span class='d-none d-md-inline'>Deletar</span>
+                </a>
+                    
+                <form id="destroy-form" action="{{ route('customer.destroy', [ $customer->id ]) }}" method="POST" style="display: none;">
+                    @method('DELETE')
+                    @csrf
+                </form>
 
                 </td>
             </tr>
         @endforeach
     </tbody>
     </table>
-
-    <a class="btn btn-primary" href="{{route('customer.create')}}" role="button" style='text-align:center;'>Inserir Cliente</a>
 
     </div>
  

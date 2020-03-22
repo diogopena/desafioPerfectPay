@@ -6,12 +6,11 @@
     <div class="container">
         <div class="jumbotron jumbotron-fluid">
             <div class="container-sm">
-            <h1 class="display-10">Relatório de vendas</h1>
+                <h1 class="display-10">Relatório de vendas</h1>
             </div>
+            <a class="btn btn-primary m-1" href="{{ route('sale.create') }}" role="button" >Inserir venda</a>
         </div>
-        <a class="btn btn-primary m-1" href="{{ route('sale.create') }}" role="button" >Inserir venda</a>
     </div>
-
     
     <div class="container">
         <div class="dropdown m-1">
@@ -20,7 +19,7 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 @foreach($customers as $customer)
-                <a class="dropdown-item" href="{{ route('sale.show',[ $customer->identification_number ]) }}">Cliente:{{$customer->name}} ID:{{$customer->identification_number}}</a>
+                <a class="dropdown-item" href="{{ route('sale.show',[ $customer->id ]) }}">Cliente:{{$customer->name}} ID:{{$customer->id}}</a>
                 @endforeach
             </div>
         </div>
@@ -34,25 +33,25 @@
         <thead>
             <tr>
             <th scope="col">Status</th>
-            <th scope="col">Quantidade</th>
+            <th scope="col">Quantidade de Vendas</th>
             <th scope="col">Valor Total</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <th scope="row">Vendas</th>
-                <td>{{$qtyvendido}}</td>
-                <td>R$ {{$valorvendido}}</td>
+                <td>{{$qtyvendido ?? ''}}</td>
+                <td>R$ {{$valorvendido ?? ''}}</td>
             </tr>
             <tr>
                 <th scope="row">Devoluções</th>
-                <td>{{$qtydevolvido}}</td>
-                <td>R$ {{$valordevolvido}}</td>
+                <td>{{$qtydevolvido ?? ''}}</td>
+                <td>R$ {{$valordevolvido ?? ''}}</td>
             </tr>
             <tr>
                 <th scope="row">Cancelamentos</th>
-                <td>{{$qtycancelado}}</td>
-                <td>R$ {{$valorcancelado}}</td>
+                <td>{{$qtycancelado ?? ''}}</td>
+                <td>R$ {{$valorcancelado ?? ''}}</td>
             </tr>
     </tbody>
     </table>
@@ -66,9 +65,9 @@
         <thead>
             <tr>
             <th scope="col">Produto</th>
-            <th scope="col">Quantidade</th>
+            <th scope="col">Quantidade de Produtos</th>
             <th scope="col">Data</th>
-            <th scope="col">Valor</th>
+            <th scope="col">Valor da Venda</th>
             <th scope="col">Status</th>
             <th scope="col">Ações</th>
             </tr>
@@ -76,7 +75,7 @@
         <tbody>
         @foreach($sales as $sale)
             <tr>
-                <th scope="row">{{$sale->product_id}}</th>
+                <th scope="row">{{$sale->product->name}}</th>
                 <td>{{$sale->qty}}</td>
                 <td>{{$sale->updated_at}}</td>
                 <td>{{$sale->sale_amount}}</td>
@@ -95,8 +94,7 @@
     </table>
     </div>
 
-    
- 
+
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

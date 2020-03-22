@@ -19,8 +19,8 @@ class CreateSalesTable extends Migration
             //$table->string('product_id')->foreign()->references('name')->on('products');
             //$table->unsignedBigInteger('customer_id');
             //$table->foreign('customer_id')->references('id')->on('customers');
-            $table->foreignId('product_id')->constrained();
-            $table->foreignId('customer_id')->constrained();
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->foreignId('customer_id')->constrained()->onDelete('cascade');
             $table->integer('qty');
             $table->float('discount');
             $table->float('sale_amount');

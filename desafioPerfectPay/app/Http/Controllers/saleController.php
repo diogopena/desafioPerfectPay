@@ -13,12 +13,17 @@ use App\Models\Product;
 
 class saleController extends Controller
 {
+
     public function index() {
 
         $customerModel = app(Customer::class);
         $customers = $customerModel->all();
+        $productModel = app(Product::class);
+        $products = $productModel->all();
+        $saleModel = app(Sale::class);
+        $sales = $saleModel->all();
         
-        return view('Sales/indexsales', compact('customers'));
+        return view('Sales/indexsales', compact('customers','products','sales'));
     }
 
     public function show($id) {
@@ -49,28 +54,26 @@ class saleController extends Controller
             'customer_id' => $id
             ])->get();
         
-        $qtyvendido = 0;
-        $qtycancelado = 0;
-        $qtydevolvido = 0;    
+        $qtyvendido = $vendidos->count();
+        $qtycancelado = $cancelados->count();
+        $qtydevolvido = $devolvidos->count();
+        
         $valorvendido = 0;
         $valorcancelado = 0;
         $valordevolvido = 0;
 
         foreach ($vendidos as $vendido) {
-            $valorvendido += ($vendido->qty * $vendido->sale_amount);
-            $qtyvendido += $vendido->qty;
+            $valorvendido += $vendido->sale_amount;
         }
         foreach ($cancelados as $cancelado) {
-            $valorcancelado += ($cancelado->qty * $cancelado->sale_amount);
-            $qtycancelado += $cancelado->qty;
+            $valorcancelado += $cancelado->sale_amount;
         }
         foreach ($devolvidos as $devolvido) {
-            $valordevolvido += ($devolvido->qty * $devolvido->sale_amount);
-            $qtydevolvido += $devolvido->qty;
+            $valordevolvido += $devolvido->sale_amount;
         }
 
-        return view('Sales/indexsalescustomer', compact('products','customers','sales','valorvendido','valordevolvido','valorcancelado','qtyvendido','qtycancelado','qtydevolvido'));
-}
+        return view('Sales/indexsales', compact('products','customers','sales','valorvendido','valordevolvido','valorcancelado','qtyvendido','qtycancelado','qtydevolvido'));
+    }
 
     public function create() {
         
@@ -85,7 +88,6 @@ class saleController extends Controller
     public function store(salesStoreRequest $request) { 
     
         $data = $request->all(); 
-        
         $customer = Customer::find($data['customer_id']);
         $product = Product::find($data['product_id']);
         
@@ -93,7 +95,7 @@ class saleController extends Controller
 
         $sale->qty = $data['qty'];
         $sale->discount = $data['discount'];
-        $sale->sale_amount = $data['sale_amount'];
+        $sale->sale_amount = ($product->price)*($sale->qty)*($sale->discount);
         $sale->status = $data['status'];
         $sale->customer()->associate($customer);
         $sale->product()->associate($product);
@@ -101,7 +103,7 @@ class saleController extends Controller
         
         return redirect()->route('sale.index');
     }
-    /*
+    
     public function edit($id) {
         $productModel = app(Product::class);
         $products = $productModel->all();
@@ -116,13 +118,14 @@ class saleController extends Controller
         $data = $request->all();
         $saleModel = app(Sale::class);
         $sale = $saleModel->find($id);
-        $sale->update([
-            'qty'=> $data['qty'],
-            'discount'=> $data['discount'],
-            'sale_amount'=> $data['sale_amount'],
-            'status'=> $data['status'],
-        ]);
+
+        $sale->qty = $data['qty'];
+        $sale->discount = $data['discount'];
+        $sale->sale_amount = ($sale->product->price)*($sale->qty)*($sale->discount);
+        $sale->status = $data['status'];
+
+        $sale->update();
         return redirect()->route('sale.index');
     }
-    */
+    
 }

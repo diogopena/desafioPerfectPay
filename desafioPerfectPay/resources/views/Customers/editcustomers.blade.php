@@ -3,7 +3,7 @@
     @include('Layouts/Layout')
     <body>
     <div class="container">
-
+    <br>
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -14,7 +14,7 @@
         </div>
     @endif
     
-    <form method="POST" action="{{route('customer.update',[$customer->identification_number])}}" class="form-horizontal form-validade">
+    <form method="POST" action="{{route('customer.update',[$customer->id])}}" class="form-horizontal form-validade">
             {{csrf_field()}}
             @method('PUT')
             <div class="form-group">

@@ -28,7 +28,6 @@ class salesStoreRequest extends FormRequest
             'product_id' => 'required' ,
             'customer_id'=> 'required',
             'qty'=> 'required|integer',
-            'sale_amount'=> 'required',
             'status'=> 'required',
         ];
     }
