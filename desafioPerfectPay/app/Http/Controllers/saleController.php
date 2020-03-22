@@ -9,6 +9,7 @@ use App\Http\Requests\salesUpdateRequest;
 use App\Models\Sale;
 use App\Models\Customer;
 use App\Models\Product;
+use Carbon\Carbon;
 
 
 class saleController extends Controller
@@ -132,35 +133,52 @@ class saleController extends Controller
     }
 
     public function search(Request $request) {
+        
         $id = $request->id;
-        $time1 = $request->time1;
-        $time2 = $request->time2;
+        $dateFrom = $request->from;
+        $dateTo = $request->to;
+
+        $dateSearchFROM = Carbon::createFromFormat('d-m-Y', $dateFrom)
+            ->tz('UTC')
+            ->toDateString();
+            
+        $dateSearchTO = Carbon::createFromFormat('d-m-Y', $dateTo)
+            ->tz('UTC')
+            ->toDateString();     
+
         $productModel = app(Product::class);
         $customerModel = app(Customer::class);
         $saleModel = app(Sale::class);
         
-        //Tabela de vendas
         $products = $productModel->all();
         $customers = $customerModel->all();
-        //where(['customer_id' => $id])->
-        $sales = $saleModel->whereBetween('created_at',[$time1,$time2])->get();
-        //$sales = $customerModel->sales();
-
-         
+        $sales = $saleModel->where([
+            ['customer_id','=', $id],
+            ['created_at','>=',$dateSearchFROM],
+            ['created_at','<=',$dateSearchTO],
+            ])->get();
+        
         //Tabela de resultado de vendas
-        $vendidos = $saleModel->where([
-            'status' => 'Vendido',
-            'customer_id' => $id
+        $vendidos = $saleModel
+        ->where([
+            ['customer_id','=', $id],
+            ['created_at','>=',$dateSearchFROM],
+            ['created_at','<=',$dateSearchTO],
+            ['status','=', 'Vendido'],
             ])->get();
 
         $cancelados = $saleModel->where([
-            'status' => 'Cancelada',
-            'customer_id' => $id
+            ['customer_id','=', $id],
+            ['created_at','>=',$dateSearchFROM],
+            ['created_at','<=',$dateSearchTO],
+            ['status','=', 'Cancelada'],
             ])->get(); 
 
         $devolvidos = $saleModel->where([
-            'status' => 'Devolvida',
-            'customer_id' => $id
+            ['customer_id','=', $id],
+            ['created_at','>=',$dateSearchFROM],
+            ['created_at','<=',$dateSearchTO],
+            ['status','=', 'Devolvida'],
             ])->get();
         
         $qtyvendido = $vendidos->count();

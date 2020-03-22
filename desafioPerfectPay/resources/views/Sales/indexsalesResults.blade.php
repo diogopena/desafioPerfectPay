@@ -13,7 +13,7 @@
     </div>
     
     <div class="container">
-    
+
     <form method='POST' action="{{route('search')}}">
         @csrf
         <div class="form-row">
@@ -30,14 +30,14 @@
             <div class="input-group">
                 <div class="input-group-prepend"></div>
                 <div class="input-group-text">DE</div>
-                <input type="text" class="form-control" id="time1">
+                <input type="text" class="form-control" id="from" name="from">
             </div>
         </div>
         <div class="col">
             <div class="input-group">
                 <div class="input-group-prepend"></div>
                 <div class="input-group-text">ATÉ</div>
-                <input type="text" class="form-control" id="time2">
+                <input type="text" class="form-control" id="to" name="to">
             </div>
         </div>
         

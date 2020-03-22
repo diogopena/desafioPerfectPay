@@ -30,14 +30,14 @@
             <div class="input-group">
                 <div class="input-group-prepend"></div>
                 <div class="input-group-text">DE</div>
-                <input type="text" class="form-control" id="time1" name="time1">
+                <input type="text" class="form-control" id="from" name="from">
             </div>
         </div>
         <div class="col">
             <div class="input-group">
                 <div class="input-group-prepend"></div>
                 <div class="input-group-text">ATÉ</div>
-                <input type="text" class="form-control" id="time2" name="time1">
+                <input type="text" class="form-control" id="to" name="to">
             </div>
         </div>
         
