@@ -28,6 +28,7 @@ class saleController extends Controller
 
     public function show($id) {
         
+        dd($request);   
         //Tabela de vendas
         $productModel = app(Product::class);
         $products = $productModel->all();
@@ -126,6 +127,56 @@ class saleController extends Controller
 
         $sale->update();
         return redirect()->route('sale.index');
+    }
+
+    public function search(Request $request) {
+        $id = $request->id;
+        dd($id);
+        //Tabela de vendas
+        $productModel = app(Product::class);
+        $products = $productModel->all();
+        $customerModel = app(Customer::class);
+        $customers = $customerModel->all();
+        $saleModel = app(Sale::class);
+        $sales = $saleModel->where(['customer_id' => $id])->get();
+        //$sales = $customerModel->sales();
+
+         
+        //Tabela de resultado de vendas
+        $vendidos = $saleModel->where([
+            'status' => 'Vendido',
+            'customer_id' => $id
+            ])->get();
+
+        $cancelados = $saleModel->where([
+            'status' => 'Cancelada',
+            'customer_id' => $id
+            ])->get(); 
+
+        $devolvidos = $saleModel->where([
+            'status' => 'Devolvida',
+            'customer_id' => $id
+            ])->get();
+        
+        $qtyvendido = $vendidos->count();
+        $qtycancelado = $cancelados->count();
+        $qtydevolvido = $devolvidos->count();
+        
+        $valorvendido = 0;
+        $valorcancelado = 0;
+        $valordevolvido = 0;
+
+        foreach ($vendidos as $vendido) {
+            $valorvendido += $vendido->sale_amount;
+        }
+        foreach ($cancelados as $cancelado) {
+            $valorcancelado += $cancelado->sale_amount;
+        }
+        foreach ($devolvidos as $devolvido) {
+            $valordevolvido += $devolvido->sale_amount;
+        }
+
+        return view('Sales/indexsales', compact('products','customers','sales','valorvendido','valordevolvido','valorcancelado','qtyvendido','qtycancelado','qtydevolvido'));
     }
     
 }

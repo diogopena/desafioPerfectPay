@@ -52,7 +52,7 @@ class productController extends Controller
     }
 
     public function destroy($id) {
-
+        
         $productModel = app(Product::class);
         $product = $productModel->find($id);
         $product->delete();

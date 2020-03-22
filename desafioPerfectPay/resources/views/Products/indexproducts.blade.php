@@ -45,12 +45,11 @@
                     <span class='d-none d-md-inline'>Editar</span>
                 </a>
                    
-                <a class="btn btn-danger btm-lg text-white" role="button" aria-pressed="true" href="#" onclick="event.preventDefault();document.getElementById('destroy-form').submit();">
-                    <span class='d-none d-md-inline'>Deletar</span>
-                </a>
+                
                 <form id="destroy-form" action="{{ route('product.destroy', [ $product->id ]) }}" method="POST">
                     @method('DELETE')
                     @csrf
+                    <button class="btn btn-danger" type="submit">Deletar</button>
                 </form>
                     
                 

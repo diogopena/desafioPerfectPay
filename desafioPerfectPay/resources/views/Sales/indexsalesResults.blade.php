@@ -13,16 +13,39 @@
     </div>
     
     <div class="container">
-        <div class="dropdown m-1">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Clientes
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                @foreach($customers as $customer)
-                <a class="dropdown-item" href="{{ route('sale.show',[ $customer->id ]) }}">Cliente:{{$customer->name}} ID:{{$customer->id}}</a>
-                @endforeach
+    <form>
+        <div class="form-row">
+            <div class="col">
+                <select id="id" class="form-control">
+                    <option selected value="">Cliente</option>
+                    @foreach($customers as $customer)
+                    <option value="{{$customer->id}}">{{$customer->name}} ID:{{$customer->id}}</option>
+                    @endforeach
+                </select>
+            </div>
+           
+        <div class="col">
+            <div class="input-group">
+                <div class="input-group-prepend"></div>
+                <div class="input-group-text">DE</div>
+                <input type="text" class="form-control" id="time1">
             </div>
         </div>
+        <div class="col">
+            <div class="input-group">
+                <div class="input-group-prepend"></div>
+                <div class="input-group-text">ATÉ</div>
+                <input type="text" class="form-control" id="time2">
+            </div>
+        </div>
+        
+        <div class="col">
+            <button class="btn btn-primary" type="submit">Procurar</button>
+        </div>
+        </div>
+        
+        
+    </form>   
     </div>
     
     <div class="container">

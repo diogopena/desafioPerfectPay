@@ -13,10 +13,12 @@
     </div>
     
     <div class="container">
-    <form>
+    
+    <form method='POST' action="{{route('search')}}">
+        @csrf
         <div class="form-row">
             <div class="col">
-                <select id="id" class="form-control">
+                <select id="id" name="id" class="form-control">
                     <option selected value="">Cliente</option>
                     @foreach($customers as $customer)
                     <option value="{{$customer->id}}">{{$customer->name}} ID:{{$customer->id}}</option>
@@ -28,14 +30,14 @@
             <div class="input-group">
                 <div class="input-group-prepend"></div>
                 <div class="input-group-text">DE</div>
-                <input type="text" class="form-control" id="time">
+                <input type="text" class="form-control" id="time1" name="time1">
             </div>
         </div>
         <div class="col">
             <div class="input-group">
                 <div class="input-group-prepend"></div>
                 <div class="input-group-text">ATÉ</div>
-                <input type="text" class="form-control" id="time">
+                <input type="text" class="form-control" id="time2" name="time1">
             </div>
         </div>
         

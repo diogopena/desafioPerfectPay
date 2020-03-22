@@ -26,3 +26,5 @@ Route::resource('/product', 'productController');
 Route::resource('/customer', 'customerController');
 
 Route::resource('/sale', 'saleController');
+
+Route::post('/search', 'saleController@search')->name('search');
