@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 @include('Layouts/Layout')
+
 <body>
 
     <div class="container">
@@ -13,9 +14,19 @@
     </div>
     
     <div class="container">
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     
     <form method='POST' action="{{route('search')}}">
         @csrf
+        @method('POST')
         <div class="form-row">
             <div class="col">
                 <select id="id" name="id" class="form-control">
@@ -30,14 +41,14 @@
             <div class="input-group">
                 <div class="input-group-prepend"></div>
                 <div class="input-group-text">DE</div>
-                <input type="text" class="form-control" id="from" name="from">
+                <input type="text" class="form-control" id="DE" name="DE" placeholder="Formato dd-mm-YYYY">
             </div>
         </div>
         <div class="col">
             <div class="input-group">
                 <div class="input-group-prepend"></div>
                 <div class="input-group-text">ATÉ</div>
-                <input type="text" class="form-control" id="to" name="to">
+                <input type="text" class="form-control" id="ATE" name="ATE" placeholder="Formato dd-mm-YYYY">
             </div>
         </div>
         

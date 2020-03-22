@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\salesStoreRequest;
 use App\Http\Requests\salesUpdateRequest;
+use App\Http\Requests\searchRequest;
 use App\Models\Sale;
 use App\Models\Customer;
 use App\Models\Product;
@@ -98,7 +99,7 @@ class saleController extends Controller
         $sale = app(Sale::class);
 
         $sale->qty = $data['qty'];
-        $sale->discount = $data['discount'];
+        $sale->discount = (1 - ($data['discount']/100));
         $sale->sale_amount = ($product->price)*($sale->qty)*($sale->discount);
         $sale->status = $data['status'];
         $sale->customer()->associate($customer);
@@ -124,7 +125,7 @@ class saleController extends Controller
         $sale = $saleModel->find($id);
 
         $sale->qty = $data['qty'];
-        $sale->discount = $data['discount'];
+        //$sale->discount = (1 - ($data['discount']/100));
         $sale->sale_amount = ($sale->product->price)*($sale->qty)*($sale->discount);
         $sale->status = $data['status'];
 
@@ -132,11 +133,11 @@ class saleController extends Controller
         return redirect()->route('sale.index');
     }
 
-    public function search(Request $request) {
+    public function search(searchRequest $request) {
         
         $id = $request->id;
-        $dateFrom = $request->from;
-        $dateTo = $request->to;
+        $dateFrom = $request->DE;
+        $dateTo = $request->ATE;
 
         $dateSearchFROM = Carbon::createFromFormat('d-m-Y', $dateFrom)
             ->tz('UTC')
@@ -144,12 +145,14 @@ class saleController extends Controller
             
         $dateSearchTO = Carbon::createFromFormat('d-m-Y', $dateTo)
             ->tz('UTC')
-            ->toDateString();     
+            ->toDateString();
+        
+        
 
         $productModel = app(Product::class);
         $customerModel = app(Customer::class);
         $saleModel = app(Sale::class);
-        
+        $client = $customerModel->find($id);
         $products = $productModel->all();
         $customers = $customerModel->all();
         $sales = $saleModel->where([
@@ -199,7 +202,7 @@ class saleController extends Controller
             $valordevolvido += $devolvido->sale_amount;
         }
 
-        return view('Sales/indexsalesResults', compact('products','customers','sales','valorvendido','valordevolvido','valorcancelado','qtyvendido','qtycancelado','qtydevolvido'));
+        return view('Sales/indexsalesResults', compact('client','dateFrom','dateTo','id','products','customers','sales','valorvendido','valordevolvido','valorcancelado','qtyvendido','qtycancelado','qtydevolvido'));
     }
     
 }

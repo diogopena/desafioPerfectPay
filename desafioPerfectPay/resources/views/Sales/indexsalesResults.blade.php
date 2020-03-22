@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
     @include('Layouts/Layout')
+    
     <body>
 
     <div class="container">
@@ -13,13 +14,23 @@
     </div>
     
     <div class="container">
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <form method='POST' action="{{route('search')}}">
         @csrf
+        @method('POST')
         <div class="form-row">
             <div class="col">
                 <select id="id" name="id" class="form-control">
-                    <option selected value="">Cliente</option>
+                    <option selected value="{{old("id")}}"></option>
                     @foreach($customers as $customer)
                     <option value="{{$customer->id}}">{{$customer->name}} ID:{{$customer->id}}</option>
                     @endforeach
@@ -30,14 +41,14 @@
             <div class="input-group">
                 <div class="input-group-prepend"></div>
                 <div class="input-group-text">DE</div>
-                <input type="text" class="form-control" id="from" name="from">
+                <input type="text" class="form-control" id="DE" name="DE" value="{{$dateFrom}}" placeholder="Formato dd-mm-YYYY">
             </div>
         </div>
         <div class="col">
             <div class="input-group">
                 <div class="input-group-prepend"></div>
                 <div class="input-group-text">ATÉ</div>
-                <input type="text" class="form-control" id="to" name="to">
+                <input type="text" class="form-control" id="ATE" name="ATE" value="{{$dateTo}}" placeholder="Formato dd-mm-YYYY">
             </div>
         </div>
         
@@ -49,11 +60,11 @@
         
     </form>   
     </div>
-    
+    <br>
     <div class="container">
     <table class="table table-striped" >
         <tr>
-            <H3>Resultado de Vendas</H3>
+            <H3>Resultado de Vendas de {{$client->name}} ID:{{$client->id}}</H3>
         </tr>
         <thead>
             <tr>
@@ -102,7 +113,7 @@
             <tr>
                 <th scope="row">{{$sale->product->name}}</th>
                 <td>{{$sale->qty}}</td>
-                <td>{{$sale->updated_at}}</td>
+                <td>{{$sale->created_at}}</td>
                 <td>{{$sale->sale_amount}}</td>
                 <td>{{$sale->status}}</td>
                 

@@ -40,7 +40,7 @@
                 </div>
                 <div class="col">
                     <label >Desconto: </label>
-                    <input id="discount" name="discount" type="text" class="form-control" value="{{old("discount",$sale->discount)}}">
+                    <input disabled id="discount" name="discount" type="text" class="form-control" value="{{old("discount",$sale->discount)}}">
                 </div>
             </div>
             <div class="form-group">

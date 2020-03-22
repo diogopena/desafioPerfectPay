@@ -24,6 +24,7 @@ class salesUpdateRequest extends FormRequest
     public function rules()
     {
         return [
+            
             'qty'=> 'required|integer',
             'status'=> 'required',
         ];
